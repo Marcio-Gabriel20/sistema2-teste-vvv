@@ -44,7 +44,7 @@ public class ModalService {
 
     public void atualizarStatus(Long id, String status) {
 
-        String url = "https://teste-vvv-production.up.railway.app/modal/" + id + "/status";
+        String url = "https://teste-vvv-production.up.railway.app/modal/"+id;
 
         Modal modalAtualizado = restTemplate.getForObject(url, Modal.class, id);
 
@@ -52,6 +52,7 @@ public class ModalService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        
         HttpEntity<Modal> requestEntity = new HttpEntity<>(modalAtualizado, headers);
 
         ResponseEntity<Modal> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Modal.class, id);
