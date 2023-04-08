@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 
+import com.testevvvsis2.sistema2.client.Client;
 import com.testevvvsis2.sistema2.model.Modal;
 
 @Service
@@ -17,6 +18,14 @@ public class ModalService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    private final Client client;
+
+    public ModalService(@Autowired Client client) {
+
+        this.client = client;
+
+    }
 
     public void cadastrar(Modal modal) {
 
@@ -42,17 +51,31 @@ public class ModalService {
 
     }
 
-    public void atualizarStatus(Long id, String status) {
+    public String atualizarModal(Long id, Modal newModal) {
+
+        try {
+         
+            client.chamarEndpointPut(id, newModal);
+            return "Dados alterados com sucesso";
+
+        } catch (Exception e) {
+            
+            System.out.println(e);
+            return "\nErro ao atualizar objeto";
+
+        }
+
+    }
+
+    /*public void atualizarStatus(Long id, Modal modal) {
 
         String url = "https://teste-vvv-production.up.railway.app/modal/"+id;
 
         Modal modalAtualizado = restTemplate.getForObject(url, Modal.class, id);
 
-        modalAtualizado.setStatus(status);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        
+
         HttpEntity<Modal> requestEntity = new HttpEntity<>(modalAtualizado, headers);
 
         ResponseEntity<Modal> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Modal.class, id);
@@ -64,6 +87,6 @@ public class ModalService {
             System.out.println("Erro na resposta: " + responseEntity.getStatusCode());
         }
 
-    }
+    }*/
 
 }
