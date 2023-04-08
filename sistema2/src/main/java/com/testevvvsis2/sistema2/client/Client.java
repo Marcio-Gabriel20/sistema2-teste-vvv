@@ -2,7 +2,6 @@ package com.testevvvsis2.sistema2.client;
 
 import java.io.IOException;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
