@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 
 import com.testevvvsis2.sistema2.client.Client;
 import com.testevvvsis2.sistema2.model.Modal;
