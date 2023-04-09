@@ -54,7 +54,7 @@ public class ModalService {
 
         try {
          
-            client.chamarEndpointPut(id, newModal);
+            client.atualizarModal(id, newModal);
             return "Dados alterados com sucesso";
 
         } catch (Exception e) {
