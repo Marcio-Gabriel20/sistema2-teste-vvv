@@ -1,16 +1,10 @@
 package com.testevvvsis2.sistema2.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.http.HttpHeaders;
 
 import com.testevvvsis2.sistema2.client.Client;
 import com.testevvvsis2.sistema2.model.Modal;
-
-import reactor.core.publisher.Mono;
 
 @Service
 public class ModalService {
@@ -23,9 +17,21 @@ public class ModalService {
 
     }
 
-    public void cadastrar(Modal modal) {
+    public String cadastrar(Modal modal) {
 
-        String url = "https://teste-vvv-production.up.railway.app/modal";
+        try {
+            
+            client.cadastrar(modal);
+            return "Cadastro realizado com sucesso";
+
+        } catch (Exception e) {
+            
+            System.out.println(e);
+            return "\nErro ao cadastrar";
+
+        }
+
+        /*String url = "https://teste-vvv-production.up.railway.app/modal";
 
         WebClient webClient = WebClient.builder()
             .baseUrl(url)
@@ -46,7 +52,7 @@ public class ModalService {
                             });
                 }
             })
-            .subscribe();
+            .subscribe();*/
 
     }
 
