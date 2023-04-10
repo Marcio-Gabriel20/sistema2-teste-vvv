@@ -17,6 +17,22 @@ public class ModalService {
 
     }
 
+    public String buscarPorId(Long id) {
+
+        try {
+            
+            client.buscarPorId(id);
+            return null;
+
+        } catch (Exception e) {
+        
+            System.out.println(e);
+            return "Falha ao buscar";
+
+        }
+
+    }
+
     public String cadastrar(Modal modal) {
 
         try {
@@ -67,6 +83,21 @@ public class ModalService {
             
             System.out.println(e);
             return "\nErro ao atualizar objeto";
+
+        }
+
+    }
+
+    public String deletarPorId(Long id) {
+
+        try {
+            
+            client.deletarPorId(id);
+            return "{id} excluído com sucesso";
+
+        } catch (Exception e) {
+        
+            return "Erro ao excluir";
 
         }
 
