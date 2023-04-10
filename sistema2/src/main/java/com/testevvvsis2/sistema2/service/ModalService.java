@@ -17,19 +17,9 @@ public class ModalService {
 
     }
 
-    public String buscarPorId(Long id) {
-
-        try {
+    public Modal buscarPorId(Long id) {
             
-            client.buscarPorId(id);
-            return null;
-
-        } catch (Exception e) {
-        
-            System.out.println(e);
-            return "Falha ao buscar";
-
-        }
+        return client.buscarPorId(id);
 
     }
 

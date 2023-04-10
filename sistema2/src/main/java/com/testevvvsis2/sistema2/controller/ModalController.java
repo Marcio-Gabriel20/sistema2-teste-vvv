@@ -23,9 +23,9 @@ public class ModalController {
     private ModalService modalService;
 
     @GetMapping("/{id}")
-    public void buscarPorId(@PathVariable("id") Long id) {
+    public Modal buscarPorId(@PathVariable("id") Long id) {
 
-        modalService.buscarPorId(id);
+        return modalService.buscarPorId(id);
 
     }
 
