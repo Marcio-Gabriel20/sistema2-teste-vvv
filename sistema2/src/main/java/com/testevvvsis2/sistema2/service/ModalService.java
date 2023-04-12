@@ -1,95 +1,66 @@
 package com.testevvvsis2.sistema2.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import com.testevvvsis2.sistema2.client.Client;
 import com.testevvvsis2.sistema2.model.Modal;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 public class ModalService {
 
-    private final Client client;
+    @Autowired
+    private WebClient webClient;
 
-    public ModalService(@Autowired Client client) {
+    public Mono<Modal> cadastrarModal(Modal modal) {
 
-        this.client = client;
-
-    }
-
-    public Modal buscarPorId(Long id) {
-            
-        return client.buscarPorId(id);
-
-    }
-
-    public String cadastrar(Modal modal) {
-
-        try {
-            
-            client.cadastrar(modal);
-            return "Cadastro realizado com sucesso";
-
-        } catch (Exception e) {
-            
-            System.out.println(e);
-            return "\nErro ao cadastrar";
-
-        }
-
-        /*String url = "https://teste-vvv-production.up.railway.app/modal";
-
-        WebClient webClient = WebClient.builder()
-            .baseUrl(url)
-            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .build();
-
-        webClient.post()
-            .body(BodyInserters.fromValue(modal))
-            .exchangeToMono(response -> {
-                if (response.statusCode().is2xxSuccessful()) {
-                    return response.bodyToMono(Modal.class)
-                            .doOnSuccess(responseBody -> System.out.println("Resposta: " + responseBody));
-                } else {
-                    return response.bodyToMono(String.class)
-                            .flatMap(errorMessage -> {
-                                System.out.println("Erro na resposta: " + response.statusCode() + " - " + errorMessage);
-                                return Mono.empty();
-                            });
-                }
-            })
-            .subscribe();*/
+        return webClient.post()
+            .uri("/modal")
+            .bodyValue(modal)
+            .retrieve()
+            .bodyToMono(Modal.class);
 
     }
 
-    public String atualizarModal(Long id, Modal newModal) {
+    public Mono<Modal> buscarModalPorId(Long id) {
 
-        try {
-         
-            client.atualizarModal(id, newModal);
-            return "Dados alterados com sucesso";
-
-        } catch (Exception e) {
-            
-            System.out.println(e);
-            return "\nErro ao atualizar objeto";
-
-        }
+        return webClient.get()
+            .uri("/modal/{id}", id)
+            .retrieve()
+            .bodyToMono(Modal.class);
 
     }
 
-    public String deletarPorId(Long id) {
+    public Flux<Modal> buscarModais() {
 
-        try {
-            
-            client.deletarPorId(id);
-            return "{id} excluído com sucesso";
+        return webClient.get()
+            .uri("/modal")
+            .retrieve()
+            .bodyToFlux(Modal.class);
 
-        } catch (Exception e) {
-        
-            return "Erro ao excluir";
+    }
 
-        }
+    public Mono<Modal> atualizarModal(Long id, Modal modal) {
+
+        return webClient.put()
+            .uri("/modal/{id}", id)
+            .bodyValue(modal)
+            .retrieve()
+            .bodyToMono(Modal.class);
+
+    }
+
+    public Mono<Void> deletarModal(Long id) {
+
+        return webClient.delete()
+            .uri("/modal/{id}", id)
+            .retrieve()
+            .bodyToMono(Void.class);
 
     }
 
